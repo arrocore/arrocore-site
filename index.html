@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arrocore — Intelligent Systems for the Future</title>
+<meta name="description" content="Arrocore LLC — AI architecture, multi-agent systems, healthcare data engineering, and web presence consulting.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --charcoal:  #1A1A1A;
+  --white:     #FFFFFF;
+  --gray:      #EAEAEA;
+  --gray2:     #F5F5F5;
+  --teal:      #2EC4B6;
+  --teal-dim:  rgba(46,196,182,0.12);
+  --teal-line: rgba(46,196,182,0.25);
+  --ink:       #3a3a3a;
+  --muted:     #888888;
+  --border:    rgba(26,26,26,0.1);
+  --border2:   rgba(26,26,26,0.16);
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--white);
+  color:var(--charcoal);
+  font-family:'Inter',sans-serif;
+  font-weight:300;
+  line-height:1.7;
+  overflow-x:hidden;
+}
+#bg-canvas{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  z-index:0;pointer-events:none;
+}
+
+/* ── NAV ─────────────────────────────────────── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 6vw;height:68px;
+  background:rgba(255,255,255,0.94);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+}
+.logo{
+  font-family:'Syne',sans-serif;font-weight:800;
+  font-size:1.2rem;letter-spacing:0.07em;
+  color:var(--charcoal);cursor:pointer;
+  display:flex;align-items:center;gap:10px;
+  text-decoration:none;
+}
+.logo-mark{
+  width:28px;height:28px;flex-shrink:0;
+  background:var(--charcoal);
+  clip-path:polygon(50% 0%,100% 38%,82% 100%,18% 100%,0% 38%);
+  animation:spin-slow 14s linear infinite;
+  position:relative;
+}
+.logo-mark::after{
+  content:'';position:absolute;inset:5px;
+  background:var(--teal);
+  clip-path:polygon(50% 0%,100% 38%,82% 100%,18% 100%,0% 38%);
+}
+@keyframes spin-slow{to{transform:rotate(360deg)}}
+
+.nav-links{display:flex;gap:2.4rem;list-style:none}
+.nav-links a{
+  font-size:0.8rem;font-weight:500;
+  letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--muted);cursor:pointer;transition:color .2s;
+  text-decoration:none;
+}
+.nav-links a:hover,.nav-links a.active{color:var(--charcoal)}
+.nav-cta{
+  font-family:'Syne',sans-serif;
+  font-size:0.75rem;font-weight:700;
+  letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--white);background:var(--charcoal);
+  border:none;padding:10px 24px;cursor:pointer;
+  transition:background .2s,transform .15s;
+}
+.nav-cta:hover{background:var(--teal);transform:translateY(-1px)}
+
+/* ── PAGES ───────────────────────────────────── */
+.page{display:none;position:relative;z-index:1;min-height:100vh;padding-top:68px}
+.page.active{display:block}
+
+/* ── HERO ────────────────────────────────────── */
+.hero{
+  min-height:calc(100vh - 68px);
+  display:flex;flex-direction:column;justify-content:center;
+  padding:5rem 6vw;position:relative;overflow:hidden;
+}
+.hero-eyebrow{
+  font-family:'DM Mono',monospace;
+  font-size:0.7rem;letter-spacing:0.24em;text-transform:uppercase;
+  color:var(--teal);margin-bottom:1.5rem;
+  opacity:0;animation:fadeUp .6s .2s forwards;
+}
+.hero-title{
+  font-family:'Syne',sans-serif;font-weight:800;
+  font-size:clamp(3rem,8vw,7rem);
+  line-height:0.93;letter-spacing:-0.025em;
+  max-width:860px;color:var(--charcoal);
+  opacity:0;animation:fadeUp .6s .35s forwards;
+}
+.hero-title .outline{
+  -webkit-text-stroke:2px var(--charcoal);
+  color:transparent;
+}
+.hero-title .accent{color:var(--teal)}
+.hero-sub{
+  max-width:480px;margin-top:2rem;
+  font-size:1rem;color:var(--muted);
+  line-height:1.75;
+  opacity:0;animation:fadeUp .6s .5s forwards;
+}
+.hero-btns{
+  display:flex;gap:1rem;flex-wrap:wrap;margin-top:2.8rem;
+  opacity:0;animation:fadeUp .6s .65s forwards;
+}
+.btn-primary{
+  font-family:'Syne',sans-serif;font-size:0.78rem;
+  font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--white);background:var(--charcoal);
+  border:none;padding:14px 32px;cursor:pointer;
+  transition:all .2s;
+}
+.btn-primary:hover{background:var(--teal)}
+.btn-ghost{
+  font-family:'Syne',sans-serif;font-size:0.78rem;
+  font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--charcoal);background:transparent;
+  border:1.5px solid var(--border2);
+  padding:14px 32px;cursor:pointer;transition:all .2s;
+}
+.btn-ghost:hover{border-color:var(--teal);color:var(--teal)}
+
+/* Hero graphic */
+.hero-graphic{
+  position:absolute;right:0;top:50%;
+  transform:translateY(-50%);
+  width:clamp(300px,44vw,580px);
+  opacity:0;animation:fadeIn 1.2s .4s forwards;
+  pointer-events:none;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+/* ── TICKER ──────────────────────────────────── */
+.ticker-wrap{overflow:hidden;background:var(--charcoal);padding:11px 0}
+.ticker{display:flex;white-space:nowrap;animation:ticker 32s linear infinite}
+.ticker-item{
+  font-family:'DM Mono',monospace;
+  font-size:0.68rem;letter-spacing:0.2em;
+  color:rgba(255,255,255,0.35);text-transform:uppercase;
+  padding:0 2.5rem;
+}
+.ticker-item span{color:var(--teal);margin-right:.5rem}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ── SHARED SECTION ──────────────────────────── */
+section{padding:6rem 6vw}
+.sec-bg-gray{background:var(--gray2)}
+.sec-bg-charcoal{background:var(--charcoal)}
+.section-label{
+  font-family:'DM Mono',monospace;font-size:0.68rem;
+  letter-spacing:0.25em;text-transform:uppercase;
+  color:var(--teal);margin-bottom:.9rem;
+}
+.section-title{
+  font-family:'Syne',sans-serif;font-weight:800;
+  font-size:clamp(1.9rem,3.8vw,3.1rem);
+  line-height:1.08;letter-spacing:-0.022em;
+  max-width:680px;color:var(--charcoal);
+}
+.section-title.on-dark{color:var(--white)}
+.section-sub{color:var(--muted);max-width:520px;margin-top:.9rem;font-size:0.93rem}
+.section-sub.on-dark{color:rgba(255,255,255,0.45)}
+
+/* ── HOME PILLARS ────────────────────────────── */
+.pillars{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  margin-top:3.5rem;gap:1px;
+  background:var(--border);border:1px solid var(--border);
+}
+.pillar{
+  background:var(--white);padding:2.5rem 2rem;
+  position:relative;overflow:hidden;
+  transition:background .25s;cursor:pointer;
+}
+.pillar::after{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:var(--teal);transform:scaleY(0);
+  transition:transform .35s;transform-origin:bottom;
+}
+.pillar:hover{background:var(--gray2)}
+.pillar:hover::after{transform:scaleY(1)}
+.pillar-icon{width:46px;height:46px;margin-bottom:1.4rem}
+.pillar-title{
+  font-family:'Syne',sans-serif;font-weight:700;
+  font-size:1.02rem;margin-bottom:.5rem;color:var(--charcoal);
+}
+.pillar-text{font-size:0.84rem;color:var(--muted);line-height:1.7}
+
+/* ── STAT BAND ───────────────────────────────── */
+.stat-band{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  padding:4rem 6vw;gap:2rem;background:var(--gray);
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+}
+.stat-item{text-align:center}
+.stat-num{
+  font-family:'Syne',sans-serif;font-weight:800;
+  font-size:2.8rem;color:var(--charcoal);line-height:1;
+}
+.stat-num .hi{color:var(--teal)}
+.stat-label{
+  font-family:'DM Mono',monospace;font-size:0.66rem;
+  letter-spacing:0.18em;color:var(--muted);
+  text-transform:uppercase;margin-top:.5rem;
+}
+
+/* ── SERVICES ────────────────────────────────── */
+.services-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(295px,1fr));
+  gap:1px;background:var(--border);
+  border:1px solid var(--border);margin-top:3.5rem;
+}
+.service-card{
+  background:var(--white);padding:2.8rem 2.2rem;
+  position:relative;overflow:hidden;transition:background .25s;
+}
+.service-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:var(--teal);transform:scaleX(0);
+  transition:transform .35s;transform-origin:left;
+}
+.service-card:hover{background:var(--gray2)}
+.service-card:hover::before{transform:scaleX(1)}
+.service-num{
+  font-family:'DM Mono',monospace;font-size:0.62rem;
+  letter-spacing:0.3em;color:var(--gray);margin-bottom:1.3rem;
+  /* uses charcoal bg trick for visibility */
+  background:var(--charcoal);color:rgba(255,255,255,0.45);
+  display:inline-block;padding:2px 8px;font-size:0.6rem;
+}
+.service-title{
+  font-family:'Syne',sans-serif;font-weight:700;
+  font-size:1.15rem;margin-bottom:.7rem;
+  color:var(--charcoal);line-height:1.2;
+}
+.service-body{font-size:0.85rem;color:var(--muted);line-height:1.72;margin-bottom:1.3rem}
+.service-tags{display:flex;flex-wrap:wrap;gap:.4rem}
+.tag{
+  font-family:'DM Mono',monospace;font-size:0.58rem;
+  letter-spacing:0.1em;color:var(--teal);
+  border:1px solid var(--teal-line);
+  padding:3px 9px;
+}
+
+/* ── PROCESS ─────────────────────────────────── */
+.process-steps{
+  display:flex;gap:0;margin-top:3rem;overflow-x:auto;padding-bottom:1rem;
+}
+.process-step{
+  flex:1;min-width:190px;padding:2rem 1.8rem;
+  border-right:1px solid rgba(255,255,255,0.08);
+}
+.process-step:last-child{border-right:none}
+.step-n{
+  font-family:'Syne',sans-serif;font-weight:800;
+  font-size:2.4rem;color:rgba(255,255,255,0.06);
+  line-height:1;margin-bottom:.9rem;
+}
+.step-title{
+  font-family:'Syne',sans-serif;font-weight:700;
+  font-size:.95rem;color:var(--white);margin-bottom:.4rem;
+}
+.step-text{font-size:0.82rem;color:rgba(255,255,255,0.4);line-height:1.65}
+
+/* ── ABOUT ───────────────────────────────────── */
+.about-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:5rem;margin-top:3rem;align-items:start;
+}
+@media(max-width:780px){.about-grid,.contact-wrap{grid-template-columns:1fr;gap:3rem}}
+.about-text p{color:var(--muted);margin-bottom:1.1rem;font-size:0.93rem;line-height:1.82}
+.about-text p strong{color:var(--charcoal);font-weight:600}
+.credentials{border:1px solid var(--border);overflow:hidden}
+.cred-header{
+  background:var(--charcoal);padding:.9rem 1.5rem;
+  font-family:'DM Mono',monospace;font-size:0.65rem;
+  letter-spacing:0.2em;text-transform:uppercase;
+  color:rgba(255,255,255,0.4);
+}
+.cred-item{
+  background:var(--white);
+  padding:.95rem 1.5rem;border-bottom:1px solid var(--border);
+  display:flex;align-items:flex-start;gap:.9rem;font-size:0.83rem;
+}
+.cred-item:last-child{border-bottom:none}
+.cred-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--teal);margin-top:.5rem;flex-shrink:0;
+}
+.cred-name{color:var(--charcoal);font-weight:500}
+.cred-sub{color:var(--muted);font-size:0.76rem;margin-top:.15rem}
+
+.values-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:1px;background:var(--border);
+  border:1px solid var(--border);margin-top:3.5rem;
+}
+.value-item{background:var(--white);padding:2.2rem 2rem}
+.value-title{
+  font-family:'Syne',sans-serif;font-weight:700;
+  font-size:.95rem;color:var(--teal);margin-bottom:.5rem;
+}
+.value-text{font-size:0.84rem;color:var(--muted);line-height:1.7}
+
+/* ── CONTACT ─────────────────────────────────── */
+.contact-wrap{
+  display:grid;grid-template-columns:1fr 1.3fr;
+  gap:5rem;margin-top:3rem;align-items:start;
+}
+.contact-info p{color:var(--muted);font-size:0.93rem;margin-bottom:2rem;line-height:1.82}
+.contact-detail{display:flex;align-items:flex-start;gap:1rem;margin-bottom:1.5rem}
+.cd-icon{
+  width:40px;height:40px;flex-shrink:0;
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  background:var(--gray2);
+}
+.cd-label{
+  font-family:'DM Mono',monospace;font-size:0.62rem;
+  letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);
+}
+.cd-value{font-size:0.9rem;color:var(--charcoal);margin-top:.18rem;font-weight:400}
+
+.contact-form{
+  background:var(--white);
+  border:1px solid var(--border);padding:2.8rem 2.2rem;
+}
+.form-title{
+  font-family:'Syne',sans-serif;font-weight:700;
+  font-size:1.2rem;margin-bottom:2rem;color:var(--charcoal);
+}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+@media(max-width:480px){.form-row{grid-template-columns:1fr}}
+.form-group{display:flex;flex-direction:column;gap:.35rem;margin-bottom:.9rem}
+.form-group label{
+  font-family:'DM Mono',monospace;font-size:0.6rem;
+  letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);
+}
+.form-group input,.form-group textarea,.form-group select{
+  background:var(--gray2);border:1px solid var(--border);
+  color:var(--charcoal);font-family:'Inter',sans-serif;
+  font-size:0.88rem;padding:12px 14px;outline:none;
+  transition:border-color .2s,background .2s;width:100%;
+}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{
+  border-color:var(--teal);background:var(--white);
+}
+.form-group select option{background:var(--white)}
+.form-group textarea{resize:vertical;min-height:110px}
+.form-submit{
+  width:100%;
+  font-family:'Syne',sans-serif;font-weight:700;
+  font-size:0.8rem;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--white);background:var(--charcoal);
+  border:none;padding:16px;cursor:pointer;
+  transition:background .2s;margin-top:.5rem;
+}
+.form-submit:hover{background:var(--teal)}
+
+/* ── FOOTER ──────────────────────────────────── */
+footer{
+  background:var(--charcoal);
+  padding:2.8rem 6vw;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:1.2rem;
+  position:relative;z-index:1;
+  border-top:3px solid var(--teal);
+}
+.footer-logo{
+  font-family:'Syne',sans-serif;font-weight:800;
+  font-size:1rem;letter-spacing:0.08em;
+  color:rgba(255,255,255,0.3);
+}
+.footer-copy{
+  font-family:'DM Mono',monospace;font-size:0.6rem;
+  letter-spacing:0.12em;color:rgba(255,255,255,0.2);text-transform:uppercase;
+}
+.footer-links{display:flex;gap:2rem}
+.footer-links a{
+  font-family:'DM Mono',monospace;font-size:0.6rem;
+  letter-spacing:0.12em;color:rgba(255,255,255,0.28);
+  text-transform:uppercase;cursor:pointer;text-decoration:none;transition:color .2s;
+}
+.footer-links a:hover{color:var(--teal)}
+
+/* ── REVEAL ──────────────────────────────────── */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .55s,transform .55s}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ── MOBILE ──────────────────────────────────── */
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+.hamburger span{display:block;width:22px;height:2px;background:var(--muted);transition:.3s}
+@media(max-width:640px){
+  .nav-links,.nav-cta{display:none}
+  .hamburger{display:flex}
+  .hero-graphic{display:none}
+  .values-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<!-- NAV -->
+<nav>
+  <div class="logo" onclick="navigate('home')">
+    <div class="logo-mark"></div>
+    ARROCORE
+  </div>
+  <ul class="nav-links">
+    <li><a onclick="navigate('home')" data-page="home">Home</a></li>
+    <li><a onclick="navigate('services')" data-page="services">Services</a></li>
+    <li><a onclick="navigate('about')" data-page="about">About</a></li>
+    <li><a onclick="navigate('contact')" data-page="contact">Contact</a></li>
+  </ul>
+  <button class="nav-cta" onclick="navigate('contact')">Get Started</button>
+  <div class="hamburger" onclick="toggleMobileMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ═══════════════ HOME ═══════════════════════ -->
+<div class="page active" id="page-home">
+  <section class="hero">
+    <div class="hero-eyebrow">// arrocore.com — intelligent systems</div>
+    <h1 class="hero-title">
+      Where <span class="outline">AI</span><br>
+      Meets<br>
+      <span class="accent">Healthcare</span>
+    </h1>
+    <p class="hero-sub">Multi-agent architecture, enterprise data engineering, and web presence strategy — built for organizations that can't afford to move slowly.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="navigate('services')">Explore Services</button>
+      <button class="btn-ghost" onclick="navigate('contact')">Start a Project</button>
+    </div>
+
+    <!-- Abstract graphic -->
+    <svg class="hero-graphic" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="g1" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#2EC4B6" stop-opacity="0.08"/>
+          <stop offset="100%" stop-color="#2EC4B6" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="g2" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#1A1A1A" stop-opacity="0.04"/>
+          <stop offset="100%" stop-color="#1A1A1A" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <circle cx="250" cy="250" r="225" fill="url(#g1)"/>
+      <circle cx="250" cy="250" r="180" fill="url(#g2)"/>
+
+      <!-- Outer ring -->
+      <circle cx="250" cy="250" r="215" stroke="#1A1A1A" stroke-width="0.5" stroke-dasharray="3 10" opacity="0.1">
+        <animateTransform attributeName="transform" type="rotate" from="0 250 250" to="360 250 250" dur="50s" repeatCount="indefinite"/>
+      </circle>
+      <!-- Teal ring -->
+      <circle cx="250" cy="250" r="162" stroke="#2EC4B6" stroke-width="0.6" stroke-dasharray="2 8" opacity="0.2">
+        <animateTransform attributeName="transform" type="rotate" from="360 250 250" to="0 250 250" dur="35s" repeatCount="indefinite"/>
+      </circle>
+      <!-- Inner ring -->
+      <circle cx="250" cy="250" r="108" stroke="#1A1A1A" stroke-width="0.5" stroke-dasharray="4 6" opacity="0.07">
+        <animateTransform attributeName="transform" type="rotate" from="0 250 250" to="360 250 250" dur="22s" repeatCount="indefinite"/>
+      </circle>
+
+      <!-- Hexagon -->
+      <polygon points="250,168 315,206 315,294 250,332 185,294 185,206"
+        stroke="#2EC4B6" stroke-width="1.2" fill="rgba(46,196,182,0.04)" opacity="0.5">
+        <animateTransform attributeName="transform" type="rotate" from="0 250 250" to="360 250 250" dur="25s" repeatCount="indefinite"/>
+      </polygon>
+
+      <!-- Hex nodes -->
+      <circle cx="250" cy="168" r="5" fill="#1A1A1A" opacity="0.5"><animate attributeName="r" values="5;7;5" dur="3s" repeatCount="indefinite"/></circle>
+      <circle cx="315" cy="206" r="4" fill="#2EC4B6" opacity="0.7"><animate attributeName="r" values="4;6;4" dur="3.8s" begin=".5s" repeatCount="indefinite"/></circle>
+      <circle cx="315" cy="294" r="5" fill="#1A1A1A" opacity="0.5"><animate attributeName="r" values="5;7;5" dur="4s" begin="1s" repeatCount="indefinite"/></circle>
+      <circle cx="250" cy="332" r="4" fill="#2EC4B6" opacity="0.7"><animate attributeName="r" values="4;6;4" dur="2.8s" begin="1.5s" repeatCount="indefinite"/></circle>
+      <circle cx="185" cy="294" r="5" fill="#1A1A1A" opacity="0.5"><animate attributeName="r" values="5;7;5" dur="3.5s" begin="2s" repeatCount="indefinite"/></circle>
+      <circle cx="185" cy="206" r="4" fill="#2EC4B6" opacity="0.7"><animate attributeName="r" values="4;6;4" dur="4.2s" begin=".8s" repeatCount="indefinite"/></circle>
+
+      <!-- Center -->
+      <circle cx="250" cy="250" r="26" fill="rgba(46,196,182,0.08)" stroke="#2EC4B6" stroke-width="1.2" opacity="0.6"/>
+      <circle cx="250" cy="250" r="9" fill="#1A1A1A" opacity="0.6">
+        <animate attributeName="r" values="9;12;9" dur="2.2s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0.3;0.6" dur="2.2s" repeatCount="indefinite"/>
+      </circle>
+
+      <!-- Spokes -->
+      <line x1="250" y1="232" x2="250" y2="168" stroke="#1A1A1A" stroke-width="0.7" opacity="0.12" stroke-dasharray="3 5"/>
+      <line x1="265" y1="241" x2="315" y2="206" stroke="#1A1A1A" stroke-width="0.7" opacity="0.12" stroke-dasharray="3 5"/>
+      <line x1="265" y1="259" x2="315" y2="294" stroke="#1A1A1A" stroke-width="0.7" opacity="0.12" stroke-dasharray="3 5"/>
+      <line x1="250" y1="276" x2="250" y2="332" stroke="#1A1A1A" stroke-width="0.7" opacity="0.12" stroke-dasharray="3 5"/>
+      <line x1="235" y1="259" x2="185" y2="294" stroke="#1A1A1A" stroke-width="0.7" opacity="0.12" stroke-dasharray="3 5"/>
+      <line x1="235" y1="241" x2="185" y2="206" stroke="#1A1A1A" stroke-width="0.7" opacity="0.12" stroke-dasharray="3 5"/>
+
+      <!-- Outer satellites -->
+      <circle cx="250" cy="78" r="3" fill="#1A1A1A" opacity="0.18"/>
+      <circle cx="388" cy="148" r="2.5" fill="#2EC4B6" opacity="0.3"/>
+      <circle cx="425" cy="288" r="3" fill="#1A1A1A" opacity="0.18"/>
+      <circle cx="348" cy="412" r="2.5" fill="#2EC4B6" opacity="0.3"/>
+      <circle cx="152" cy="412" r="3" fill="#1A1A1A" opacity="0.18"/>
+      <circle cx="75" cy="288" r="2.5" fill="#2EC4B6" opacity="0.3"/>
+      <circle cx="112" cy="148" r="3" fill="#1A1A1A" opacity="0.18"/>
+
+      <!-- Outer lines -->
+      <line x1="250" y1="168" x2="250" y2="81" stroke="#2EC4B6" stroke-width="0.4" opacity="0.15"/>
+      <line x1="315" y1="206" x2="386" y2="150" stroke="#2EC4B6" stroke-width="0.4" opacity="0.15"/>
+      <line x1="315" y1="294" x2="423" y2="286" stroke="#2EC4B6" stroke-width="0.4" opacity="0.15"/>
+      <line x1="250" y1="332" x2="350" y2="410" stroke="#2EC4B6" stroke-width="0.4" opacity="0.15"/>
+      <line x1="185" y1="294" x2="77" y2="286" stroke="#2EC4B6" stroke-width="0.4" opacity="0.15"/>
+      <line x1="185" y1="206" x2="114" y2="150" stroke="#2EC4B6" stroke-width="0.4" opacity="0.15"/>
+
+      <!-- Arrow motif -->
+      <g transform="translate(219,230)">
+        <path d="M0 20 L18 0 L36 20" stroke="#2EC4B6" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <animate attributeName="stroke-opacity" values="1;0.4;1" dur="2.5s" repeatCount="indefinite"/>
+        </path>
+        <line x1="18" y1="0" x2="18" y2="40" stroke="#2EC4B6" stroke-width="2.5" stroke-linecap="round">
+          <animate attributeName="stroke-opacity" values="1;0.4;1" dur="2.5s" repeatCount="indefinite"/>
+        </line>
+      </g>
+    </svg>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker-wrap">
+    <div class="ticker">
+      <span class="ticker-item"><span>//</span>Multi-Agent AI Architecture</span>
+      <span class="ticker-item"><span>//</span>Healthcare Data Engineering</span>
+      <span class="ticker-item"><span>//</span>Epic Clarity + Caboodle</span>
+      <span class="ticker-item"><span>//</span>Databricks + Delta Lake</span>
+      <span class="ticker-item"><span>//</span>SEO + Web Strategy</span>
+      <span class="ticker-item"><span>//</span>Autonomous Workflow Design</span>
+      <span class="ticker-item"><span>//</span>HIPAA-Compliant Pipelines</span>
+      <span class="ticker-item"><span>//</span>LLM Integration</span>
+      <span class="ticker-item"><span>//</span>Multi-Agent AI Architecture</span>
+      <span class="ticker-item"><span>//</span>Healthcare Data Engineering</span>
+      <span class="ticker-item"><span>//</span>Epic Clarity + Caboodle</span>
+      <span class="ticker-item"><span>//</span>Databricks + Delta Lake</span>
+      <span class="ticker-item"><span>//</span>SEO + Web Strategy</span>
+      <span class="ticker-item"><span>//</span>Autonomous Workflow Design</span>
+      <span class="ticker-item"><span>//</span>HIPAA-Compliant Pipelines</span>
+      <span class="ticker-item"><span>//</span>LLM Integration</span>
+    </div>
+  </div>
+
+  <!-- PILLARS -->
+  <section>
+    <div class="section-label">// what we do</div>
+    <h2 class="section-title reveal">Four Capabilities.<br>One Strategic Partner.</h2>
+    <p class="section-sub reveal">Arrocore brings PhD-level analytical rigor, 20+ years of systems engineering, and cutting-edge AI to every engagement.</p>
+    <div class="pillars reveal">
+      <div class="pillar" onclick="navigate('services')">
+        <svg class="pillar-icon" viewBox="0 0 46 46" fill="none">
+          <polygon points="23,4 41,14 41,32 23,42 5,32 5,14" stroke="#1A1A1A" stroke-width="1.5" fill="rgba(26,26,26,0.03)"/>
+          <circle cx="23" cy="23" r="3.5" fill="#2EC4B6"/>
+          <line x1="23" y1="19.5" x2="23" y2="4" stroke="#2EC4B6" stroke-width="0.9" stroke-dasharray="2 3" opacity="0.5"/>
+          <line x1="26" y1="25.5" x2="41" y2="14" stroke="#2EC4B6" stroke-width="0.9" stroke-dasharray="2 3" opacity="0.5"/>
+          <line x1="26" y1="27" x2="41" y2="32" stroke="#2EC4B6" stroke-width="0.9" stroke-dasharray="2 3" opacity="0.5"/>
+          <line x1="23" y1="26.5" x2="23" y2="42" stroke="#2EC4B6" stroke-width="0.9" stroke-dasharray="2 3" opacity="0.5"/>
+          <line x1="20" y1="27" x2="5" y2="32" stroke="#2EC4B6" stroke-width="0.9" stroke-dasharray="2 3" opacity="0.5"/>
+          <line x1="20" y1="25.5" x2="5" y2="14" stroke="#2EC4B6" stroke-width="0.9" stroke-dasharray="2 3" opacity="0.5"/>
+        </svg>
+        <div class="pillar-title">Agentic AI Systems</div>
+        <div class="pillar-text">Multi-agent orchestration, autonomous pipelines, and LLM-powered workflow automation built for production, not demos.</div>
+      </div>
+      <div class="pillar" onclick="navigate('services')">
+        <svg class="pillar-icon" viewBox="0 0 46 46" fill="none">
+          <rect x="3" y="10" width="40" height="26" rx="1" stroke="#1A1A1A" stroke-width="1.5" fill="rgba(26,26,26,0.03)"/>
+          <line x1="3" y1="19" x2="43" y2="19" stroke="#1A1A1A" stroke-width="0.7" stroke-dasharray="2 4" opacity="0.2"/>
+          <path d="M9 28 L17 22 L24 25.5 L31 16 L41 20" stroke="#2EC4B6" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+          <circle cx="17" cy="22" r="2" fill="#2EC4B6"/>
+          <circle cx="24" cy="25.5" r="2" fill="#2EC4B6"/>
+          <circle cx="31" cy="16" r="2" fill="#2EC4B6"/>
+          <line x1="14" y1="7" x2="14" y2="10" stroke="#1A1A1A" stroke-width="1.5"/>
+          <line x1="32" y1="7" x2="32" y2="10" stroke="#1A1A1A" stroke-width="1.5"/>
+        </svg>
+        <div class="pillar-title">Healthcare Data Engineering</div>
+        <div class="pillar-text">Enterprise Databricks pipelines, Epic Clarity/Caboodle integration, and HIPAA-compliant ETL at scale.</div>
+      </div>
+      <div class="pillar" onclick="navigate('services')">
+        <svg class="pillar-icon" viewBox="0 0 46 46" fill="none">
+          <circle cx="23" cy="23" r="17" stroke="#1A1A1A" stroke-width="1.5" fill="rgba(26,26,26,0.03)"/>
+          <ellipse cx="23" cy="23" rx="7" ry="17" stroke="#1A1A1A" stroke-width="0.8" opacity="0.2"/>
+          <line x1="6" y1="23" x2="40" y2="23" stroke="#1A1A1A" stroke-width="0.8" opacity="0.2"/>
+          <circle cx="23" cy="23" r="2.5" fill="#2EC4B6"/>
+          <path d="M11 17 Q23 14 35 17" stroke="#2EC4B6" stroke-width="1.1" fill="none" opacity="0.55"/>
+          <path d="M10 29 Q23 32 36 29" stroke="#2EC4B6" stroke-width="1.1" fill="none" opacity="0.55"/>
+        </svg>
+        <div class="pillar-title">Web Presence & SEO</div>
+        <div class="pillar-text">Search strategy, technical SEO, digital economy positioning, and web architecture that makes you discoverable and credible.</div>
+      </div>
+      <div class="pillar" onclick="navigate('services')">
+        <svg class="pillar-icon" viewBox="0 0 46 46" fill="none">
+          <path d="M6 38 L6 16 L23 6 L40 16 L40 38 Z" stroke="#1A1A1A" stroke-width="1.5" fill="rgba(26,26,26,0.03)"/>
+          <line x1="6" y1="27" x2="40" y2="27" stroke="#1A1A1A" stroke-width="0.7" opacity="0.2"/>
+          <path d="M19 38 L19 27" stroke="#1A1A1A" stroke-width="1.5"/>
+          <path d="M27 38 L27 22" stroke="#1A1A1A" stroke-width="1.5"/>
+          <circle cx="23" cy="12" r="2.5" fill="#2EC4B6"/>
+          <path d="M15 21 L19 18 L23 20 L27 13 L31 16" stroke="#2EC4B6" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+        </svg>
+        <div class="pillar-title">Strategic Consulting</div>
+        <div class="pillar-text">Platform strategy, AI readiness, data architecture review, and BI roadmapping from an engineer who speaks both languages.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STAT BAND -->
+  <div class="stat-band reveal">
+    <div class="stat-item">
+      <div class="stat-num">20<span class="hi">+</span></div>
+      <div class="stat-label">Years in Systems Engineering</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">2<span class="hi">×</span></div>
+      <div class="stat-label">Databricks Certified</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" style="font-size:2rem">Ph<span class="hi">D</span></div>
+      <div class="stat-label">Analytical Depth</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num"><span class="hi">∞</span></div>
+      <div class="stat-label">Uptime Commitment</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ SERVICES ══════════════════════ -->
+<div class="page" id="page-services">
+  <section>
+    <div class="section-label">// capabilities</div>
+    <h1 class="section-title">Services Built for the<br>Intelligent Enterprise</h1>
+    <p class="section-sub">Every engagement is scoped and executed with engineering precision — not consulting theater.</p>
+    <div class="services-grid reveal">
+      <div class="service-card">
+        <div class="service-num">01</div>
+        <div class="service-title">Multi-Agent AI Architecture</div>
+        <div class="service-body">Design and deployment of autonomous multi-agent systems for research, signal generation, workflow orchestration, and decision support. Built using Anthropic Claude, OpenAI, and Moonshot with real-time data integration and human-in-the-loop controls.</div>
+        <div class="service-tags"><span class="tag">LLM Integration</span><span class="tag">Agent Orchestration</span><span class="tag">Automation</span><span class="tag">Python</span></div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">02</div>
+        <div class="service-title">Healthcare Data Engineering</div>
+        <div class="service-body">Enterprise Databricks implementation, PySpark/Delta Lake pipeline architecture, and Epic EHR data integration. Specializing in Epic Clarity and Caboodle, HIPAA-compliant ETL, Health Catalyst SAMD, and cloud-native migrations from legacy SQL environments.</div>
+        <div class="service-tags"><span class="tag">Databricks</span><span class="tag">Epic Clarity</span><span class="tag">Delta Lake</span><span class="tag">HIPAA</span><span class="tag">PySpark</span></div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">03</div>
+        <div class="service-title">Web Presence & SEO Consulting</div>
+        <div class="service-body">Comprehensive digital presence strategy for businesses navigating the modern search economy. Technical SEO audits, content architecture, structured data, local search optimization, competitive gap analysis, and digital authority building — grounded in data, not guesswork.</div>
+        <div class="service-tags"><span class="tag">Technical SEO</span><span class="tag">Content Strategy</span><span class="tag">Search Economy</span><span class="tag">Analytics</span></div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">04</div>
+        <div class="service-title">AI Readiness & Platform Strategy</div>
+        <div class="service-body">Assessment and roadmapping for organizations preparing to adopt AI-driven workflows. Gap analysis, tool evaluation, platform selection, and phased implementation planning — delivered as an executive briefing with a concrete 90-day action plan.</div>
+        <div class="service-tags"><span class="tag">Strategy</span><span class="tag">Cloud Architecture</span><span class="tag">Roadmapping</span><span class="tag">Azure</span></div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">05</div>
+        <div class="service-title">Databricks Training & Enablement</div>
+        <div class="service-body">Custom Databricks curriculum for engineering teams, managers, and clinical staff. Covering PySpark, Delta Lake, Unity Catalog, MLflow, and CI/CD workflows. Delivered remotely or on-site — designed to leave your team fully self-sufficient.</div>
+        <div class="service-tags"><span class="tag">Training</span><span class="tag">Databricks</span><span class="tag">Unity Catalog</span><span class="tag">MLflow</span></div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">06</div>
+        <div class="service-title">Business Intelligence & Analytics</div>
+        <div class="service-body">End-to-end BI including data modeling, dashboard design (Power BI, Tableau, Qlik), KPI framework development, and self-service analytics enablement — bridging raw clinical and operational data to the insights leadership acts on.</div>
+        <div class="service-tags"><span class="tag">Power BI</span><span class="tag">Tableau</span><span class="tag">Qlik</span><span class="tag">Data Modeling</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec-bg-charcoal">
+    <div class="section-label">// engagement model</div>
+    <h2 class="section-title on-dark reveal">How We Work</h2>
+    <div class="process-steps reveal">
+      <div class="process-step"><div class="step-n">01</div><div class="step-title">Discovery</div><div class="step-text">A focused conversation to understand your data environment, AI readiness, goals, and timeline. No fluff, no sales deck.</div></div>
+      <div class="process-step"><div class="step-n">02</div><div class="step-title">Architecture</div><div class="step-text">We design a solution with clear scope, defined deliverables, and honest tradeoff analysis before any code is written.</div></div>
+      <div class="process-step"><div class="step-n">03</div><div class="step-title">Build</div><div class="step-text">Hands-on implementation with weekly checkpoints, full documentation, and version-controlled deliverables. You own everything.</div></div>
+      <div class="process-step"><div class="step-n">04</div><div class="step-title">Enable</div><div class="step-text">Knowledge transfer, training, and runbooks ensure your team can operate and extend what we built independently.</div></div>
+      <div class="process-step"><div class="step-n">05</div><div class="step-title">Evolve</div><div class="step-text">Optional retainer for ongoing optimization, monitoring, and new capability development as your needs grow.</div></div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════════ ABOUT ══════════════════════════ -->
+<div class="page" id="page-about">
+  <section>
+    <div class="section-label">// about arrocore</div>
+    <h1 class="section-title">The Rare Combination of<br>Depth and Breadth</h1>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>Arrocore LLC was founded on a simple premise: the most valuable technology partners are those who can <strong>think rigorously and build reliably</strong> — not one or the other.</p>
+        <p>The principal brings over <strong>20 years of systems engineering experience</strong>, a Ph.D. in analytical research, and active production-grade work in the most in-demand areas of enterprise technology: <strong>Databricks, multi-agent AI systems, healthcare data infrastructure, and digital strategy</strong>.</p>
+        <p>Before returning to technology, Arrocore's principal spent 15 years as a university professor — translating complex material for diverse audiences. <strong>That communication skill is applied every day</strong> to bridge clinical teams, engineering staff, and executive leadership.</p>
+        <p>We operate from the <strong>Dallas–Fort Worth Metroplex</strong>, serving clients locally, nationally, and remotely. We take a limited number of clients at any time to ensure every engagement receives genuine expertise and full attention.</p>
+      </div>
+      <div class="reveal">
+        <div class="credentials">
+          <div class="cred-header">// credentials & stack</div>
+          <div class="cred-item"><div class="cred-dot"></div><div><div class="cred-name">Databricks Certified Data Engineer — Professional</div><div class="cred-sub">Highest tier · June 2025</div></div></div>
+          <div class="cred-item"><div class="cred-dot"></div><div><div class="cred-name">Databricks Certified Data Engineer — Associate</div><div class="cred-sub">May 2025</div></div></div>
+          <div class="cred-item"><div class="cred-dot"></div><div><div class="cred-name">DeepLearning.AI Machine Learning Specialization</div><div class="cred-sub">April 2025</div></div></div>
+          <div class="cred-item"><div class="cred-dot"></div><div><div class="cred-name">Ph.D. · M.Div. (Yale) · B.A. w/ CS Minor (UT Austin)</div><div class="cred-sub">Analytical foundation across disciplines</div></div></div>
+          <div class="cred-item"><div class="cred-dot"></div><div><div class="cred-name">Stack: Databricks · PySpark · Delta Lake · Python · Azure</div><div class="cred-sub">Epic Clarity · Caboodle · Power BI · Tableau · LLM APIs</div></div></div>
+          <div class="cred-item"><div class="cred-dot" style="background:var(--teal)"></div><div><div class="cred-name">Studying: Claude Certified Architect (Foundations)</div><div class="cred-sub">Agentic architecture · Multi-agent orchestration patterns</div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="sec-bg-gray" style="padding-top:0;padding-bottom:5rem;margin-top:0">
+    <div style="padding-top:5rem">
+    <div class="section-label">// principles</div>
+    <h2 class="section-title reveal">What Guides Every Engagement</h2>
+    <div class="values-grid reveal">
+      <div class="value-item"><div class="value-title">Precision Over Speed</div><div class="value-text">We'd rather take an extra day to get the architecture right than ship something that breaks under load. Technical debt is expensive. Good design is cheap.</div></div>
+      <div class="value-item"><div class="value-title">Radical Transparency</div><div class="value-text">If something is beyond our scope, we say so. If a proposed solution has weaknesses, we name them. Clients deserve honest counsel, not managed impressions.</div></div>
+      <div class="value-item"><div class="value-title">You Own the Work</div><div class="value-text">Every deliverable — code, documentation, architecture diagrams, runbooks — is fully transferred to you. No lock-in. No ongoing dependency on Arrocore to operate what we built.</div></div>
+      <div class="value-item"><div class="value-title">Domain Fluency Matters</div><div class="value-text">Healthcare data is not generic data. We invest in understanding your domain before writing a single query — because the right schema depends on the right question.</div></div>
+    </div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════════ CONTACT ═════════════════════════ -->
+<div class="page" id="page-contact">
+  <section>
+    <div class="section-label">// get in touch</div>
+    <h1 class="section-title">Let's Build Something<br>Worth Building</h1>
+    <div class="contact-wrap">
+      <div class="contact-info reveal">
+        <p>Whether you're scoping a multi-agent AI system, need a Databricks migration partner, want to strengthen your web presence, or just want an honest second opinion on your data architecture — reach out.</p>
+        <p>Arrocore takes a limited number of clients at any time to ensure every project gets real attention.</p>
+        <div class="contact-detail">
+          <div class="cd-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+          <div><div class="cd-label">Email</div><div class="cd-value">dhk@donaldhkim.com</div></div>
+        </div>
+        <div class="contact-detail">
+          <div class="cd-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z"/></svg></div>
+          <div><div class="cd-label">Phone</div><div class="cd-value">(203) 887-6323</div></div>
+        </div>
+        <div class="contact-detail">
+          <div class="cd-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <div><div class="cd-label">Location</div><div class="cd-value">Colleyville, TX · DFW Metroplex<br><span style="color:var(--muted);font-size:0.82rem">Serving clients nationwide & remote</span></div></div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="contact-form">
+          <div class="form-title">Start a Conversation</div>
+          <div class="form-row">
+            <div class="form-group"><label>First Name</label><input type="text" placeholder="Donald"></div>
+            <div class="form-group"><label>Last Name</label><input type="text" placeholder="Kim"></div>
+          </div>
+          <div class="form-group"><label>Email</label><input type="email" placeholder="you@company.com"></div>
+          <div class="form-group"><label>Organization</label><input type="text" placeholder="Your company or health system"></div>
+          <div class="form-group">
+            <label>Service of Interest</label>
+            <select>
+              <option value="">Select a service...</option>
+              <option>Multi-Agent AI Architecture</option>
+              <option>Healthcare Data Engineering</option>
+              <option>Web Presence & SEO</option>
+              <option>AI Readiness & Platform Strategy</option>
+              <option>Databricks Training & Enablement</option>
+              <option>Business Intelligence & Analytics</option>
+              <option>Not sure — let's talk</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Tell us about your project</label><textarea placeholder="Describe your challenge, timeline, and what success looks like..."></textarea></div>
+          <button class="form-submit" onclick="handleFormSubmit()">Send Message →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">ARROCORE LLC</div>
+  <div class="footer-links">
+    <a onclick="navigate('home')">Home</a>
+    <a onclick="navigate('services')">Services</a>
+    <a onclick="navigate('about')">About</a>
+    <a onclick="navigate('contact')">Contact</a>
+  </div>
+  <div class="footer-copy">© 2025 Arrocore LLC · Colleyville, TX</div>
+</footer>
+
+<script>
+// ── CANVAS: light-bg particle network ─────────────────────────
+(function(){
+  const canvas = document.getElementById('bg-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, nodes = [], mouse = {x:null,y:null};
+  const COUNT = 52, DIST = 130;
+
+  function resize(){ W=canvas.width=window.innerWidth; H=canvas.height=window.innerHeight; }
+  window.addEventListener('resize',resize); resize();
+  window.addEventListener('mousemove',e=>{mouse.x=e.clientX;mouse.y=e.clientY;});
+  window.addEventListener('mouseleave',()=>{mouse.x=null;mouse.y=null;});
+
+  for(let i=0;i<COUNT;i++){
+    nodes.push({
+      x:Math.random()*window.innerWidth,
+      y:Math.random()*window.innerHeight,
+      vx:(Math.random()-.5)*.22,
+      vy:(Math.random()-.5)*.22,
+      teal:Math.random()>.72
+    });
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    nodes.forEach(n=>{
+      n.x+=n.vx; n.y+=n.vy;
+      if(n.x<0||n.x>W)n.vx*=-1;
+      if(n.y<0||n.y>H)n.vy*=-1;
+    });
+    for(let i=0;i<nodes.length;i++){
+      for(let j=i+1;j<nodes.length;j++){
+        const dx=nodes[i].x-nodes[j].x,dy=nodes[i].y-nodes[j].y;
+        const d=Math.sqrt(dx*dx+dy*dy);
+        if(d<DIST){
+          const a=(1-d/DIST)*0.12;
+          ctx.beginPath();
+          ctx.strokeStyle=nodes[i].teal?`rgba(46,196,182,${a*1.4})`:`rgba(26,26,26,${a})`;
+          ctx.lineWidth=.5;
+          ctx.moveTo(nodes[i].x,nodes[i].y);
+          ctx.lineTo(nodes[j].x,nodes[j].y);
+          ctx.stroke();
+        }
+      }
+      if(mouse.x!==null){
+        const dx=nodes[i].x-mouse.x,dy=nodes[i].y-mouse.y;
+        const d=Math.sqrt(dx*dx+dy*dy);
+        if(d<110){
+          const a=(1-d/110)*0.45;
+          ctx.beginPath();
+          ctx.strokeStyle=`rgba(46,196,182,${a})`;
+          ctx.lineWidth=.8;
+          ctx.moveTo(nodes[i].x,nodes[i].y);
+          ctx.lineTo(mouse.x,mouse.y);
+          ctx.stroke();
+        }
+      }
+    }
+    nodes.forEach(n=>{
+      ctx.beginPath();
+      ctx.arc(n.x,n.y,n.teal?2:1.5,0,Math.PI*2);
+      ctx.fillStyle=n.teal?'rgba(46,196,182,0.55)':'rgba(26,26,26,0.2)';
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ── NAVIGATION ────────────────────────────────────────────────
+function navigate(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a=>{
+    a.classList.toggle('active',a.dataset.page===page);
+  });
+  window.scrollTo({top:0,behavior:'smooth'});
+  triggerReveal();
+}
+
+// ── SCROLL REVEAL ─────────────────────────────────────────────
+function triggerReveal(){
+  setTimeout(()=>{
+    document.querySelectorAll('.page.active .reveal').forEach((el,i)=>{
+      setTimeout(()=>el.classList.add('visible'),i*90);
+    });
+  },80);
+}
+
+// ── FORM ──────────────────────────────────────────────────────
+function handleFormSubmit(){
+  const btn=document.querySelector('.form-submit');
+  btn.textContent='✓ Message Sent';
+  btn.style.background='var(--teal)';
+  setTimeout(()=>{btn.textContent='Send Message →';btn.style.background='';},3000);
+}
+
+// ── MOBILE MENU ───────────────────────────────────────────────
+function toggleMobileMenu(){
+  const links=document.querySelector('.nav-links');
+  if(links.style.display==='flex'){links.style.display='none';return;}
+  links.style.cssText='display:flex;flex-direction:column;position:absolute;top:68px;left:0;right:0;background:rgba(255,255,255,0.97);padding:1.5rem 6vw;gap:1.2rem;border-bottom:1px solid var(--border);z-index:99';
+}
+
+triggerReveal();
+</script>
+</body>
+</html>
