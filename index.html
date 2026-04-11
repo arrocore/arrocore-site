@@ -59,19 +59,13 @@ nav{
   display:flex;align-items:center;gap:10px;
   text-decoration:none;
 }
-.logo-mark{
-  width:28px;height:28px;flex-shrink:0;
-  background:var(--charcoal);
-  clip-path:polygon(50% 0%,100% 38%,82% 100%,18% 100%,0% 38%);
-  animation:spin-slow 14s linear infinite;
-  position:relative;
+.logo-mark{width:28px;height:28px;flex-shrink:0}
+@keyframes pulse-thru{
+  0%,100%{stroke-opacity:0.28}
+  50%{stroke-opacity:1}
 }
-.logo-mark::after{
-  content:'';position:absolute;inset:5px;
-  background:var(--teal);
-  clip-path:polygon(50% 0%,100% 38%,82% 100%,18% 100%,0% 38%);
-}
-@keyframes spin-slow{to{transform:rotate(360deg)}}
+.chev-lo{animation:pulse-thru 1.8s ease-in-out infinite}
+.chev-hi{animation:pulse-thru 1.8s ease-in-out infinite 0.5s}
 
 .nav-links{display:flex;gap:2.4rem;list-style:none}
 .nav-links a{
@@ -435,7 +429,10 @@ footer{
 <!-- NAV -->
 <nav>
   <div class="logo" onclick="navigate('home')">
-    <div class="logo-mark"></div>
+    <svg class="logo-mark" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <polyline class="chev-lo" points="4,20 14,11 24,20" stroke="#2EC4B6" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+      <polyline class="chev-hi" points="4,13 14,4 24,13" stroke="#2EC4B6" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
     ARROCORE
   </div>
   <ul class="nav-links">
