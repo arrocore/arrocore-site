@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ARROCORE — Intelligent Systems for the Future</title>
+<title>Arrocore — Intelligent Systems for the Future</title>
 <meta name="description" content="Arrocore LLC — AI architecture, multi-agent systems, healthcare data engineering, and web presence consulting.">
 <meta property="og:title" content="Arrocore — Intelligent Systems for the Future">
 <meta property="og:description" content="AI architecture, multi-agent systems, healthcare data engineering, and web presence consulting.">
@@ -11,6 +11,7 @@
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://arrocore.com/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://arrocore.com/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -59,19 +60,13 @@ nav{
   display:flex;align-items:center;gap:10px;
   text-decoration:none;
 }
-.logo-mark{
-  width:28px;height:28px;flex-shrink:0;
-  background:var(--charcoal);
-  clip-path:polygon(50% 0%,100% 38%,82% 100%,18% 100%,0% 38%);
-  animation:spin-slow 14s linear infinite;
-  position:relative;
-}
-.logo-mark::after{
-  content:'';position:absolute;inset:5px;
-  background:var(--teal);
-  clip-path:polygon(50% 0%,100% 38%,82% 100%,18% 100%,0% 38%);
-}
-@keyframes spin-slow{to{transform:rotate(360deg)}}
+.logo-mark{width:28px;height:28px;flex-shrink:0}
+@keyframes chevFloat3{0%,60%{transform:translateY(0);opacity:1}75%{transform:translateY(-3px);opacity:0.5}100%{transform:translateY(0);opacity:1}}
+@keyframes chevFloat2{0%,65%{transform:translateY(0);opacity:0.6}80%{transform:translateY(-3px);opacity:0.25}100%{transform:translateY(0);opacity:0.6}}
+@keyframes chevFloat1{0%,70%{transform:translateY(0);opacity:0.25}85%{transform:translateY(-3px);opacity:0.1}100%{transform:translateY(0);opacity:0.25}}
+.logo-mark .ch3{animation:chevFloat3 2.4s ease-in-out infinite}
+.logo-mark .ch2{animation:chevFloat2 2.4s ease-in-out 0.12s infinite}
+.logo-mark .ch1{animation:chevFloat1 2.4s ease-in-out 0.24s infinite}
 
 .nav-links{display:flex;gap:2.4rem;list-style:none}
 .nav-links a{
@@ -119,6 +114,9 @@ nav{
   color:transparent;
 }
 .hero-title .accent{color:var(--teal)}
+@media(max-width:640px){
+  .hero-title{font-size:1.9rem;line-height:1.08;letter-spacing:-0.01em}
+}
 .hero-sub{
   max-width:480px;margin-top:2rem;
   font-size:1rem;color:var(--muted);
@@ -422,9 +420,6 @@ footer{
   .hamburger{display:flex}
   .hero-graphic{display:none}
   .values-grid{grid-template-columns:1fr}
-  .hero-title{
-    font-size:2rem;
-  }
 }
 </style>
 </head>
@@ -435,7 +430,11 @@ footer{
 <!-- NAV -->
 <nav>
   <div class="logo" onclick="navigate('home')">
-    <div class="logo-mark"></div>
+    <svg class="logo-mark" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <polyline class="ch1" points="12,44 26,32 40,44" stroke="#2EC4B6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      <polyline class="ch2" points="12,34 26,22 40,34" stroke="#2EC4B6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      <polyline class="ch3" points="12,24 26,12 40,24" stroke="#2EC4B6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
     ARROCORE
   </div>
   <ul class="nav-links">
@@ -764,23 +763,23 @@ footer{
         <p>Arrocore takes a limited number of clients at any time to ensure every project gets real attention.</p>
         <div class="contact-detail">
           <div class="cd-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
-          <div><div class="cd-label">Email</div><div class="cd-value">contact@arrocore.com</div></div>
+          <div><div class="cd-label">Email</div><div class="cd-value">dhk@donaldhkim.com</div></div>
         </div>
         <div class="contact-detail">
           <div class="cd-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z"/></svg></div>
-          <div><div class="cd-label">Phone</div><div class="cd-value">(817) 458-8763</div></div>
+          <div><div class="cd-label">Phone</div><div class="cd-value">(203) 887-6323</div></div>
         </div>
         <div class="contact-detail">
           <div class="cd-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
-          <div><div class="cd-label">Location</div><div class="cd-value">DFW Metroplex<br><span style="color:var(--muted);font-size:0.82rem">Serving clients nationwide & remote</span></div></div>
+          <div><div class="cd-label">Location</div><div class="cd-value">Colleyville, TX · DFW Metroplex<br><span style="color:var(--muted);font-size:0.82rem">Serving clients nationwide & remote</span></div></div>
         </div>
       </div>
       <div class="reveal">
         <div class="contact-form">
           <div class="form-title">Start a Conversation</div>
           <div class="form-row">
-            <div class="form-group"><label>First Name</label><input type="text" placeholder="first name"></div>
-	    <div class="form-group"><label>Last Name</label><input type="text" placeholder="last name"></div>
+            <div class="form-group"><label>First Name</label><input type="text" placeholder="Donald"></div>
+            <div class="form-group"><label>Last Name</label><input type="text" placeholder="Kim"></div>
           </div>
           <div class="form-group"><label>Email</label><input type="email" placeholder="you@company.com"></div>
           <div class="form-group"><label>Organization</label><input type="text" placeholder="Your company or health system"></div>
