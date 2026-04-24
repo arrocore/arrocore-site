@@ -408,6 +408,97 @@ footer{
 .reveal{opacity:0;transform:translateY(20px);transition:opacity .55s,transform .55s}
 .reveal.visible{opacity:1;transform:translateY(0)}
 
+/* ── WEB PRICING ─────────────────────────────── */
+.billing-callout{
+  margin-top:2rem;padding:.9rem 1.5rem;
+  border-left:3px solid var(--teal);
+  background:var(--teal-dim);
+  font-family:'DM Mono',monospace;
+  font-size:0.8rem;color:var(--ink);letter-spacing:0.02em;line-height:1.7;
+}
+.web-pricing-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:1px;background:var(--border);
+  border:1px solid var(--border);margin-top:3rem;
+}
+.web-tier{
+  background:var(--white);padding:2.5rem 2rem;
+  display:flex;flex-direction:column;
+}
+.web-tier-featured{
+  background:var(--charcoal);
+  outline:2px solid var(--teal);outline-offset:-1px;z-index:1;
+}
+.tier-badge{
+  font-family:'DM Mono',monospace;font-size:0.58rem;
+  letter-spacing:0.15em;text-transform:uppercase;
+  color:var(--teal);border:1px solid var(--teal-line);
+  display:inline-block;padding:3px 9px;margin-bottom:1.2rem;width:fit-content;
+}
+.tier-name{
+  font-family:'Syne',sans-serif;font-weight:800;
+  font-size:1.5rem;color:var(--charcoal);margin-bottom:.4rem;
+}
+.web-tier-featured .tier-name{color:var(--white)}
+.tier-desc{font-size:0.83rem;color:var(--muted);margin-bottom:1.5rem;line-height:1.6}
+.web-tier-featured .tier-desc{color:rgba(255,255,255,0.4)}
+.tier-price{display:flex;align-items:baseline;gap:.5rem}
+.tier-price-num{
+  font-family:'Syne',sans-serif;font-weight:800;
+  font-size:2.8rem;color:var(--charcoal);line-height:1;
+}
+.web-tier-featured .tier-price-num{color:var(--teal)}
+.tier-price-label{font-size:0.85rem;color:var(--muted)}
+.web-tier-featured .tier-price-label{color:rgba(255,255,255,0.35)}
+.tier-monthly{
+  font-family:'DM Mono',monospace;font-size:0.75rem;
+  color:var(--teal);margin-top:.3rem;letter-spacing:0.05em;
+}
+.tier-divider{height:1px;background:var(--border);margin:1.5rem 0}
+.web-tier-featured .tier-divider{background:rgba(255,255,255,0.08)}
+.tier-features-label{
+  font-family:'DM Mono',monospace;font-size:0.65rem;
+  font-weight:600;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:.8rem;
+}
+.web-tier-featured .tier-features-label{color:rgba(255,255,255,0.35)}
+.tier-features{list-style:none;flex:1}
+.tier-features li{
+  font-size:0.84rem;color:var(--ink);
+  padding:.55rem 0;border-bottom:1px solid var(--border);
+  display:flex;align-items:flex-start;gap:.7rem;line-height:1.5;
+}
+.web-tier-featured .tier-features li{color:rgba(255,255,255,0.7);border-bottom-color:rgba(255,255,255,0.06)}
+.tier-features li::before{
+  content:'✓';color:var(--teal);font-size:0.8rem;font-weight:700;flex-shrink:0;margin-top:.15rem;
+}
+.tier-hours{
+  font-family:'DM Mono',monospace;font-size:0.7rem;
+  letter-spacing:0.08em;color:var(--teal);
+  border-left:2px solid var(--teal);
+  padding:.5rem .8rem;background:var(--teal-dim);margin-top:1.2rem;
+}
+.btn-teal{
+  font-family:'Syne',sans-serif;font-size:0.78rem;
+  font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--charcoal);background:var(--teal);
+  border:none;padding:14px 32px;cursor:pointer;transition:all .2s;
+}
+.btn-teal:hover{background:#26b0a3}
+
+/* ── WEB FAQ ─────────────────────────────────── */
+.web-faq-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:1px;background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.06);margin-top:3rem;
+}
+.web-faq-item{background:rgba(255,255,255,0.03);padding:2rem 1.8rem}
+.web-faq-q{
+  font-family:'Syne',sans-serif;font-weight:700;
+  font-size:.95rem;color:var(--white);margin-bottom:.6rem;line-height:1.3;
+}
+.web-faq-a{font-size:0.84rem;color:rgba(255,255,255,0.4);line-height:1.7}
+
 /* ── MOBILE ──────────────────────────────────── */
 .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
 .hamburger span{display:block;width:22px;height:2px;background:var(--muted);transition:.3s}
@@ -436,8 +527,8 @@ footer{
     ARROCORE
   </div>
   <ul class="nav-links">
-    <li><a onclick="navigate('home')" data-page="home">Home</a></li>
     <li><a onclick="navigate('services')" data-page="services">Services</a></li>
+    <li><a onclick="navigate('web')" data-page="web">Web</a></li>
     <li><a onclick="navigate('about')" data-page="about">About</a></li>
     <li><a onclick="navigate('contact')" data-page="contact">Contact</a></li>
   </ul>
@@ -802,12 +893,126 @@ footer{
   </section>
 </div>
 
+<!-- ═══════════════ WEB ════════════════════════ -->
+<div class="page" id="page-web">
+  <section>
+    <div class="section-label">// web design & hosting</div>
+    <h1 class="section-title">Simple, Transparent Pricing</h1>
+    <p class="section-sub">Custom-built websites powered by your business goals — designed for DFW local businesses.</p>
+    <div class="billing-callout reveal">
+      <strong>Billing:</strong> Upfront fee due at contract signing. Monthly retainer begins on the 1st of the following month. All plans include domain registration in the monthly fee.
+    </div>
+    <div class="web-pricing-grid reveal">
+
+      <!-- Essentials -->
+      <div class="web-tier">
+        <div class="tier-badge">Recommended for Most</div>
+        <div class="tier-name">Essentials</div>
+        <p class="tier-desc">Perfect for service-based businesses, contractors, and professionals</p>
+        <div class="tier-price">
+          <span class="tier-price-num">$2,500</span>
+          <span class="tier-price-label">upfront</span>
+        </div>
+        <div class="tier-monthly">+ $200/month</div>
+        <div class="tier-divider"></div>
+        <div class="tier-features-label">What's Included:</div>
+        <ul class="tier-features">
+          <li>5–6 custom pages (Home, About, Services, Contact, Testimonials, FAQ)</li>
+          <li>Contact form with email notifications</li>
+          <li>Google Maps embed</li>
+          <li>Mobile responsive design</li>
+          <li>Basic SEO setup</li>
+          <li>Google reviews integration</li>
+        </ul>
+        <div class="tier-hours">5 hours/month of updates included</div>
+        <button class="btn-ghost" style="width:100%;margin-top:2rem" onclick="navigate('contact')">Get Started</button>
+      </div>
+
+      <!-- Growth -->
+      <div class="web-tier web-tier-featured">
+        <div class="tier-badge">Most Popular</div>
+        <div class="tier-name">Growth</div>
+        <p class="tier-desc">For businesses that want to sell online or build audience</p>
+        <div class="tier-price">
+          <span class="tier-price-num">$3,000</span>
+          <span class="tier-price-label">upfront</span>
+        </div>
+        <div class="tier-monthly">+ $275/month</div>
+        <div class="tier-divider"></div>
+        <div class="tier-features-label">Everything in Essentials, plus:</div>
+        <ul class="tier-features">
+          <li>Blog platform (up to 2 posts/month included; $75 per additional post)</li>
+          <li>E-commerce basics (up to 10 products, Stripe/PayPal integration)</li>
+          <li>Email capture form (Mailchimp integration)</li>
+          <li>Social media feed embed</li>
+        </ul>
+        <div class="tier-hours">5 hours/month of updates included</div>
+        <button class="btn-teal" style="width:100%;margin-top:2rem" onclick="navigate('contact')">Get Started</button>
+      </div>
+
+      <!-- Premium -->
+      <div class="web-tier">
+        <div class="tier-badge">For Growth-Stage</div>
+        <div class="tier-name">Premium</div>
+        <p class="tier-desc">Advanced features for ambitious businesses</p>
+        <div class="tier-price">
+          <span class="tier-price-num">$3,500</span>
+          <span class="tier-price-label">upfront</span>
+        </div>
+        <div class="tier-monthly">+ $350/month</div>
+        <div class="tier-divider"></div>
+        <div class="tier-features-label">Everything in Growth, plus:</div>
+        <ul class="tier-features">
+          <li>Advanced e-commerce (unlimited products, inventory, shipping calculator)</li>
+          <li>Member portal & user accounts</li>
+          <li>Advanced analytics dashboard</li>
+          <li>Monthly SEO audit & reporting</li>
+        </ul>
+        <div class="tier-hours">10 hours/month of updates included</div>
+        <button class="btn-ghost" style="width:100%;margin-top:2rem" onclick="navigate('contact')">Get Started</button>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="sec-bg-charcoal">
+    <div class="section-label">// faq</div>
+    <h2 class="section-title on-dark reveal">Frequently Asked Questions</h2>
+    <div class="web-faq-grid reveal">
+      <div class="web-faq-item">
+        <div class="web-faq-q">What happens after the included monthly hours?</div>
+        <div class="web-faq-a">Additional work is billed at $75/hour. You can also purchase extra 5-hour blocks as needed.</div>
+      </div>
+      <div class="web-faq-item">
+        <div class="web-faq-q">Can I upgrade or downgrade my plan?</div>
+        <div class="web-faq-a">Yes — change tiers with 30 days' notice. Pricing adjusts pro-rata in your next billing cycle.</div>
+      </div>
+      <div class="web-faq-item">
+        <div class="web-faq-q">What if I need something custom?</div>
+        <div class="web-faq-a">Features outside these tiers are quoted separately. Let's discuss your vision.</div>
+      </div>
+      <div class="web-faq-item">
+        <div class="web-faq-q">Is there a contract commitment?</div>
+        <div class="web-faq-a">No long-term lock-in. Cancel the monthly retainer anytime with 30 days' notice. Your domain transfers with you if you leave.</div>
+      </div>
+      <div class="web-faq-item">
+        <div class="web-faq-q">What's included in the monthly retainer?</div>
+        <div class="web-faq-a">Security updates, daily backups, performance monitoring, domain renewal, and your included update hours.</div>
+      </div>
+      <div class="web-faq-item">
+        <div class="web-faq-q">Do you provide copywriting or photography?</div>
+        <div class="web-faq-a">You provide copy and photos; we handle design and integration. We can refer you to a professional writer if needed.</div>
+      </div>
+    </div>
+  </section>
+</div>
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">ARROCORE LLC</div>
   <div class="footer-links">
-    <a onclick="navigate('home')">Home</a>
     <a onclick="navigate('services')">Services</a>
+    <a onclick="navigate('web')">Web</a>
     <a onclick="navigate('about')">About</a>
     <a onclick="navigate('contact')">Contact</a>
   </div>
