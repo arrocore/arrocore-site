@@ -1334,7 +1334,7 @@ function navigate(page){
   window.scrollTo({top:0,behavior:'smooth'});
   triggerReveal();
   // Update URL hash
-  window.location.hash='#'+page;
+  if(page==='home'){window.location.hash='';}else{window.location.hash='#'+page;}
   // Initialize blog filters if on blog page
   if(page==='blog') initBlogFilters();
 }
