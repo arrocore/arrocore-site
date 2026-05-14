@@ -1333,9 +1333,23 @@ function navigate(page){
   });
   window.scrollTo({top:0,behavior:'smooth'});
   triggerReveal();
+  // Update URL hash
+  window.location.hash='#'+page;
   // Initialize blog filters if on blog page
   if(page==='blog') initBlogFilters();
 }
+
+// ── HASH ROUTING ──────────────────────────────────────────────
+window.addEventListener('hashchange',()=>{
+  const page=window.location.hash.slice(1)||'home';
+  navigate(page);
+});
+
+// On page load, check hash and navigate accordingly
+document.addEventListener('DOMContentLoaded',()=>{
+  const page=window.location.hash.slice(1)||'home';
+  navigate(page);
+});
 
 // ── BLOG FILTERS ───────────────────────────────────────────────
 function initBlogFilters(){
