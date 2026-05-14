@@ -1370,6 +1370,7 @@ window.addEventListener('hashchange',()=>{
     a.classList.toggle('active',a.dataset.page===page);
   });
   triggerReveal();
+  closeMobileMenu();
   if(page==='blog') initBlogFilters();
 });
 
@@ -1390,6 +1391,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     a.classList.toggle('active',a.dataset.page===page);
   });
   triggerReveal();
+  closeMobileMenu();
   if(page==='blog') initBlogFilters();
 });
 
@@ -1434,6 +1436,11 @@ function handleFormSubmit(){
 }
 
 // ── MOBILE MENU ───────────────────────────────────────────────
+function closeMobileMenu(){
+  const links=document.querySelector('.nav-links');
+  links.style.display='none';
+}
+
 function toggleMobileMenu(){
   const links=document.querySelector('.nav-links');
   if(links.style.display==='flex'){links.style.display='none';return;}
