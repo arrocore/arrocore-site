@@ -499,9 +499,128 @@ footer{
 }
 .web-faq-a{font-size:0.84rem;color:rgba(255,255,255,0.4);line-height:1.7}
 
+/* ── BLOG ────────────────────────────────────── */
+.blog-hero{
+  min-height:40vh;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:5rem 6vw;position:relative;
+  background:linear-gradient(135deg,var(--white) 0%,var(--gray2) 100%);
+}
+.blog-hero::before{
+  content:'';position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(46,196,182,0.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(46,196,182,0.05) 1px,transparent 1px);
+  background-size:52px 52px;
+  pointer-events:none;
+}
+.blog-hero-content{position:relative;z-index:1;max-width:680px}
+.blog-hero h1{
+  font-family:'Syne',sans-serif;font-weight:800;
+  font-size:clamp(2.5rem,6vw,4rem);
+  line-height:0.95;letter-spacing:-0.03em;
+  color:var(--charcoal);margin-bottom:1.5rem;
+}
+.blog-hero-accent{color:var(--teal)}
+.blog-hero p{
+  font-size:1rem;color:var(--muted);
+  max-width:520px;line-height:1.8;
+}
+.blog-filters{
+  padding:3rem 6vw;
+  display:flex;gap:1rem;flex-wrap:wrap;
+  border-bottom:1px solid var(--border);
+  position:sticky;top:68px;background:var(--white);z-index:50;
+}
+.filter-pill{
+  font-family:'DM Mono',monospace;
+  font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--muted);background:transparent;
+  border:1.5px solid var(--border);padding:10px 18px;
+  cursor:pointer;transition:all .2s;
+  border-radius:24px;
+}
+.filter-pill:hover{
+  border-color:var(--teal);color:var(--teal);
+}
+.filter-pill.active{
+  background:var(--teal);color:var(--white);border-color:var(--teal);
+}
+.blog-grid{
+  padding:4rem 6vw;
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+  gap:2rem;
+  grid-auto-rows:auto;
+}
+@media(min-width:768px){
+  .blog-grid{grid-template-columns:repeat(3,1fr)}
+}
+.blog-card{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:8px;
+  overflow:hidden;
+  transition:all .35s cubic-bezier(0.23,1,0.320,1);
+  cursor:pointer;
+  display:flex;flex-direction:column;
+  height:100%;
+}
+.blog-card:hover{
+  border-color:var(--teal);
+  box-shadow:0 16px 40px rgba(46,196,182,0.12);
+  transform:translateY(-6px);
+}
+.blog-card-image{
+  width:100%;height:200px;
+  background:linear-gradient(135deg,var(--teal-dim),rgba(46,196,182,0.06));
+  position:relative;overflow:hidden;
+}
+.blog-card-image-placeholder{
+  width:100%;height:100%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;
+  font-size:0.9rem;color:var(--teal);opacity:0.5;
+  font-weight:600;
+}
+.blog-card-content{
+  padding:1.8rem;display:flex;flex-direction:column;flex:1;
+}
+.blog-card-badge{
+  display:inline-block;
+  font-family:'DM Mono',monospace;
+  font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;
+  color:var(--teal);border:1px solid var(--teal-line);
+  padding:4px 10px;margin-bottom:1rem;width:fit-content;
+  border-radius:3px;
+}
+.blog-card-title{
+  font-family:'Syne',sans-serif;font-weight:700;
+  font-size:1.35rem;line-height:1.2;color:var(--charcoal);
+  margin-bottom:0.8rem;
+  letter-spacing:-0.01em;
+  flex-grow:1;
+}
+.blog-card:hover .blog-card-title{color:var(--teal)}
+.blog-card-excerpt{
+  font-size:0.9rem;color:var(--muted);
+  line-height:1.6;margin-bottom:1.2rem;
+}
+.blog-card-meta{
+  display:flex;gap:1.5rem;align-items:center;
+  font-family:'DM Mono',monospace;
+  font-size:0.78rem;color:rgba(26,26,26,0.5);
+  letter-spacing:0.05em;
+  margin-top:auto;border-top:1px solid var(--border);
+  padding-top:1rem;
+}
+
 /* ── MOBILE ──────────────────────────────────── */
 .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
 .hamburger span{display:block;width:22px;height:2px;background:var(--muted);transition:.3s}
+@media(max-width:768px){
+  .blog-grid{grid-template-columns:repeat(2,1fr)}
+}
 @media(max-width:640px){
   .nav-links,.nav-cta{display:none}
   .hamburger{display:flex}
@@ -510,6 +629,13 @@ footer{
   .hero-title{
     font-size:2rem;
   }
+  .blog-grid{grid-template-columns:1fr}
+  .blog-filters{flex-direction:column;gap:0.5rem}
+}
+@media(max-width:480px){
+  .blog-hero{padding:3rem 4vw}
+  .blog-filters{padding:2rem 4vw}
+  .blog-grid{padding:2rem 4vw}
 }
 </style>
 </head>
@@ -529,6 +655,7 @@ footer{
   <ul class="nav-links">
     <li><a onclick="navigate('home')" data-page="home">Home</a></li>
     <li><a onclick="navigate('services')" data-page="services">Services</a></li>
+    <li><a onclick="navigate('blog')" data-page="blog">Journal</a></li>
     <li><a onclick="navigate('about')" data-page="about">About</a></li>
     <li><a onclick="navigate('contact')" data-page="contact">Contact</a></li>
   </ul>
@@ -798,6 +925,116 @@ footer{
       <div class="process-step"><div class="step-n">04</div><div class="step-title">Enable</div><div class="step-text">Knowledge transfer, training, and runbooks ensure your team can operate and extend what we built independently.</div></div>
       <div class="process-step"><div class="step-n">05</div><div class="step-title">Evolve</div><div class="step-text">Optional retainer for ongoing optimization, monitoring, and new capability development as your needs grow.</div></div>
     </div>
+  </section>
+</div>
+
+<!-- ═══════════════ BLOG ════════════════════════════ -->
+<div class="page" id="page-blog">
+  <section class="blog-hero">
+    <div class="blog-hero-content">
+      <h1>Journal<span class="blog-hero-accent">.</span></h1>
+      <p>Thoughts on AI architecture, healthcare systems, and building intelligent infrastructure for the future.</p>
+    </div>
+  </section>
+
+  <div class="blog-filters">
+    <button class="filter-pill active" data-filter="all">All</button>
+    <button class="filter-pill" data-filter="ai">AI</button>
+    <button class="filter-pill" data-filter="healthcare">Healthcare</button>
+    <button class="filter-pill" data-filter="strategy">Strategy</button>
+    <button class="filter-pill" data-filter="systems">Systems</button>
+  </div>
+
+  <section class="blog-grid">
+    <article class="blog-card" data-category="ai">
+      <div class="blog-card-image">
+        <div class="blog-card-image-placeholder">featured image</div>
+      </div>
+      <div class="blog-card-content">
+        <span class="blog-card-badge">AI</span>
+        <h2 class="blog-card-title">Building Autonomous Systems with Claude</h2>
+        <p class="blog-card-excerpt">How we're using agentic AI and multi-step reasoning to automate complex workflows. Real examples from production systems.</p>
+        <div class="blog-card-meta">
+          <span>5 min read</span>
+          <span>Mar 10, 2026</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="blog-card" data-category="healthcare">
+      <div class="blog-card-image">
+        <div class="blog-card-image-placeholder">featured image</div>
+      </div>
+      <div class="blog-card-content">
+        <span class="blog-card-badge">Healthcare</span>
+        <h2 class="blog-card-title">HIPAA-Compliant Data Pipelines</h2>
+        <p class="blog-card-excerpt">Designing secure, auditable data flows for healthcare systems. We cover encryption, access control, and compliance frameworks.</p>
+        <div class="blog-card-meta">
+          <span>8 min read</span>
+          <span>Mar 7, 2026</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="blog-card" data-category="systems">
+      <div class="blog-card-image">
+        <div class="blog-card-image-placeholder">featured image</div>
+      </div>
+      <div class="blog-card-content">
+        <span class="blog-card-badge">Systems</span>
+        <h2 class="blog-card-title">The Case for Boring Infrastructure</h2>
+        <p class="blog-card-excerpt">Why choosing stable, proven tools over cutting-edge tech is often the right call. A philosophy for long-term system design.</p>
+        <div class="blog-card-meta">
+          <span>6 min read</span>
+          <span>Mar 3, 2026</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="blog-card" data-category="strategy">
+      <div class="blog-card-image">
+        <div class="blog-card-image-placeholder">featured image</div>
+      </div>
+      <div class="blog-card-content">
+        <span class="blog-card-badge">Strategy</span>
+        <h2 class="blog-card-title">Web Presence as a Competitive Advantage</h2>
+        <p class="blog-card-excerpt">How smart web strategy goes beyond aesthetics. Building digital systems that drive business outcomes and user trust.</p>
+        <div class="blog-card-meta">
+          <span>7 min read</span>
+          <span>Feb 28, 2026</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="blog-card" data-category="ai">
+      <div class="blog-card-image">
+        <div class="blog-card-image-placeholder">featured image</div>
+      </div>
+      <div class="blog-card-content">
+        <span class="blog-card-badge">AI</span>
+        <h2 class="blog-card-title">Multi-Agent LLM Architectures</h2>
+        <p class="blog-card-excerpt">Deep dive into agent orchestration patterns. How to structure systems where multiple AI agents work together without interference.</p>
+        <div class="blog-card-meta">
+          <span>12 min read</span>
+          <span>Feb 24, 2026</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="blog-card" data-category="healthcare">
+      <div class="blog-card-image">
+        <div class="blog-card-image-placeholder">featured image</div>
+      </div>
+      <div class="blog-card-content">
+        <span class="blog-card-badge">Healthcare</span>
+        <h2 class="blog-card-title">EHR Integration Without Losing Your Mind</h2>
+        <p class="blog-card-excerpt">Practical patterns for integrating with Epic, Cerner, and custom EHR systems. Common pitfalls and how to avoid them.</p>
+        <div class="blog-card-meta">
+          <span>10 min read</span>
+          <span>Feb 19, 2026</span>
+        </div>
+      </div>
+    </article>
   </section>
 </div>
 
@@ -1096,6 +1333,30 @@ function navigate(page){
   });
   window.scrollTo({top:0,behavior:'smooth'});
   triggerReveal();
+  // Initialize blog filters if on blog page
+  if(page==='blog') initBlogFilters();
+}
+
+// ── BLOG FILTERS ───────────────────────────────────────────────
+function initBlogFilters(){
+  const filterButtons=document.querySelectorAll('#page-blog .filter-pill');
+  const blogCards=document.querySelectorAll('#page-blog .blog-card');
+  filterButtons.forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const filter=btn.dataset.filter;
+      filterButtons.forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      blogCards.forEach(card=>{
+        if(filter==='all'||card.dataset.category===filter){
+          card.style.display='block';
+          setTimeout(()=>card.style.opacity='1',0);
+        }else{
+          card.style.opacity='0';
+          card.style.display='none';
+        }
+      });
+    });
+  });
 }
 
 // ── SCROLL REVEAL ─────────────────────────────────────────────
