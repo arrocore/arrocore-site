@@ -946,9 +946,9 @@ footer{
   </div>
 
   <section class="blog-grid">
-    <article class="blog-card" data-category="ai">
+    <a href="/blog/building-autonomous-systems-with-claude.html" class="blog-card" data-category="ai" style="text-decoration:none;color:inherit;display:block;">
       <div class="blog-card-image">
-        <div class="blog-card-image-placeholder">featured image</div>
+        <img src="https://source.unsplash.com/800x600/?artificial-intelligence" alt="Building Autonomous Systems with Claude" style="width:100%;height:300px;object-fit:cover;display:block;">
       </div>
       <div class="blog-card-content">
         <span class="blog-card-badge">AI</span>
@@ -959,11 +959,11 @@ footer{
           <span>Mar 10, 2026</span>
         </div>
       </div>
-    </article>
+    </a>
 
-    <article class="blog-card" data-category="healthcare">
+    <a href="/blog/hipaa-compliant-data-pipelines.html" class="blog-card" data-category="healthcare" style="text-decoration:none;color:inherit;display:block;">
       <div class="blog-card-image">
-        <div class="blog-card-image-placeholder">featured image</div>
+        <img src="https://source.unsplash.com/800x600/?medical-data" alt="HIPAA-Compliant Data Pipelines" style="width:100%;height:300px;object-fit:cover;display:block;">
       </div>
       <div class="blog-card-content">
         <span class="blog-card-badge">Healthcare</span>
@@ -974,11 +974,11 @@ footer{
           <span>Mar 7, 2026</span>
         </div>
       </div>
-    </article>
+    </a>
 
-    <article class="blog-card" data-category="systems">
+    <a href="/blog/the-case-for-boring-infrastructure.html" class="blog-card" data-category="systems" style="text-decoration:none;color:inherit;display:block;">
       <div class="blog-card-image">
-        <div class="blog-card-image-placeholder">featured image</div>
+        <img src="https://source.unsplash.com/800x600/?server" alt="The Case for Boring Infrastructure" style="width:100%;height:300px;object-fit:cover;display:block;">
       </div>
       <div class="blog-card-content">
         <span class="blog-card-badge">Systems</span>
@@ -989,11 +989,11 @@ footer{
           <span>Mar 3, 2026</span>
         </div>
       </div>
-    </article>
+    </a>
 
-    <article class="blog-card" data-category="strategy">
+    <a href="/blog/web-presence-competitive-advantage.html" class="blog-card" data-category="strategy" style="text-decoration:none;color:inherit;display:block;">
       <div class="blog-card-image">
-        <div class="blog-card-image-placeholder">featured image</div>
+        <img src="https://source.unsplash.com/800x600/?web-design" alt="Web Presence as a Competitive Advantage" style="width:100%;height:300px;object-fit:cover;display:block;">
       </div>
       <div class="blog-card-content">
         <span class="blog-card-badge">Strategy</span>
@@ -1004,11 +1004,11 @@ footer{
           <span>Feb 28, 2026</span>
         </div>
       </div>
-    </article>
+    </a>
 
-    <article class="blog-card" data-category="ai">
+    <a href="/blog/multi-agent-llm-architectures.html" class="blog-card" data-category="ai" style="text-decoration:none;color:inherit;display:block;">
       <div class="blog-card-image">
-        <div class="blog-card-image-placeholder">featured image</div>
+        <img src="https://source.unsplash.com/800x600/?artificial-intelligence" alt="Multi-Agent LLM Architectures" style="width:100%;height:300px;object-fit:cover;display:block;">
       </div>
       <div class="blog-card-content">
         <span class="blog-card-badge">AI</span>
@@ -1019,11 +1019,11 @@ footer{
           <span>Feb 24, 2026</span>
         </div>
       </div>
-    </article>
+    </a>
 
-    <article class="blog-card" data-category="healthcare">
+    <a href="/blog/ehr-integration-without-losing-your-mind.html" class="blog-card" data-category="healthcare" style="text-decoration:none;color:inherit;display:block;">
       <div class="blog-card-image">
-        <div class="blog-card-image-placeholder">featured image</div>
+        <img src="https://source.unsplash.com/800x600/?healthcare-ehr" alt="EHR Integration Without Losing Your Mind" style="width:100%;height:300px;object-fit:cover;display:block;">
       </div>
       <div class="blog-card-content">
         <span class="blog-card-badge">Healthcare</span>
@@ -1034,7 +1034,8 @@ footer{
           <span>Feb 19, 2026</span>
         </div>
       </div>
-    </article>
+    </a>
+
   </section>
 </div>
 
@@ -1333,8 +1334,13 @@ function navigate(page){
   });
   window.scrollTo({top:0,behavior:'smooth'});
   triggerReveal();
-  // Update URL hash
-  if(page==='home'){window.location.hash='';}else{window.location.hash='#'+page;}
+  // Update URL hash only for non-home pages
+  if(page!=='home'){
+    window.location.hash='#'+page;
+  } else if(window.location.hash){
+    // If we're on home and there's a hash, remove it
+    window.history.pushState(null,null,window.location.pathname);
+  }
   // Initialize blog filters if on blog page
   if(page==='blog') initBlogFilters();
 }
@@ -1342,13 +1348,34 @@ function navigate(page){
 // ── HASH ROUTING ──────────────────────────────────────────────
 window.addEventListener('hashchange',()=>{
   const page=window.location.hash.slice(1)||'home';
-  navigate(page);
+  const inactive=document.querySelectorAll('.page.active');
+  inactive.forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a=>{
+    a.classList.toggle('active',a.dataset.page===page);
+  });
+  triggerReveal();
+  if(page==='blog') initBlogFilters();
 });
 
 // On page load, check hash and navigate accordingly
 document.addEventListener('DOMContentLoaded',()=>{
-  const page=window.location.hash.slice(1)||'home';
-  navigate(page);
+  const path=window.location.pathname;
+  let page='home';
+  
+  // Determine page from hash
+  if(window.location.hash){
+    page=window.location.hash.slice(1);
+  }
+  
+  // Show the right page
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a=>{
+    a.classList.toggle('active',a.dataset.page===page);
+  });
+  triggerReveal();
+  if(page==='blog') initBlogFilters();
 });
 
 
