@@ -1438,7 +1438,13 @@ function handleFormSubmit(){
 // ── MOBILE MENU ───────────────────────────────────────────────
 function closeMobileMenu(){
   const links=document.querySelector('.nav-links');
-  links.style.display='none';
+  // Only close if we're on mobile (window width < 640px)
+  if(window.innerWidth < 640){
+    links.style.display='none';
+  } else {
+    // On desktop, let CSS handle it
+    links.style.display='';
+  }
 }
 
 function toggleMobileMenu(){
