@@ -35,10 +35,23 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 footer{background:var(--charcoal);padding:2.8rem 6vw;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.2rem;border-top:3px solid var(--teal);margin-top:4rem}
 .footer-copy{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.12em;color:rgba(255,255,255,0.2);text-transform:uppercase}
 @media(max-width:768px){.article-container{padding-left:4vw;padding-right:4vw}.article-meta{flex-wrap:wrap}}
+@keyframes pulse-thru{
+  0%,100%{stroke-opacity:0.28}
+  50%{stroke-opacity:1}
+}
+.chev-lo{animation:pulse-thru 1.8s ease-in-out infinite}
+.chev-hi{animation:pulse-thru 1.8s ease-in-out infinite 0.5s}
+.logo-mark{width:28px;height:28px;flex-shrink:0}
 </style>
 </head>
 <body>
-<nav><a class="logo" href="/">ARROCORE</a><ul class="nav-links"><li><a onclick="window.location='/#home'" style="cursor:pointer">Home</a></li><li><a onclick="window.location='/#services'" style="cursor:pointer">Services</a></li><li><a onclick="window.location='/#blog'" style="cursor:pointer">Journal</a></li><li><a onclick="window.location='/#about'" style="cursor:pointer">About</a></li></ul></nav>
+<nav><a class="logo" href="/">
+    <svg class="logo-mark" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px;flex-shrink:0">
+      <polyline class="chev-lo" points="4,20 14,11 24,20" stroke="#2EC4B6" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+      <polyline class="chev-hi" points="4,13 14,4 24,13" stroke="#2EC4B6" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    ARROCORE
+  </a><ul class="nav-links"><li><a onclick="window.location='/#home'" style="cursor:pointer">Home</a></li><li><a onclick="window.location='/#services'" style="cursor:pointer">Services</a></li><li><a onclick="window.location='/#blog'" style="cursor:pointer">Journal</a></li><li><a onclick="window.location='/#about'" style="cursor:pointer">About</a></li></ul></nav>
 <article class="article-container">
 <div class="article-meta"><span class="article-badge">AI</span><span>5 min read</span><span>Apr 10, 2026</span></div>
 <h1 class="article-title">Building Autonomous Systems with Claude</h1>
